@@ -1,7 +1,9 @@
 
 import { Box, Button, Card, CardBody, CardFooter, Container, Heading, Text } from "@chakra-ui/react";
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
+import { FaEdit } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 export default function Contacts() {
     return (
@@ -29,9 +31,12 @@ export default function Contacts() {
                         </Box>
                     </CardBody>
 
-                    <CardFooter>
-                        <Button variant='solid' colorScheme='blue'>
-                            +
+                    <CardFooter flexDirection='column' justifyContent='space-around' >
+                        <Button leftIcon={<FaEdit />} variant='solid' colorScheme='gray' size={'sm'}>
+                            Edit
+                        </Button>
+                        <Button leftIcon={<RiDeleteBin5Fill />} variant='solid' colorScheme='red' size={'sm'}>
+                            Delete
                         </Button>
                     </CardFooter>
                 </Card>
