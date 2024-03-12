@@ -1,29 +1,31 @@
 import { Metadata } from "next";
 import Contacts from "@/app/ui/contacts/contacts";
-import { Text } from "@chakra-ui/react";
-import Breadcrumbs from "@/app/ui/breadcrumbs";
+import { Box, Container, Text } from "@chakra-ui/react";
+import { CreateContact } from "../ui/buttons";
 
 export const metadata: Metadata = {
-    title: 'Contacts',
+  title: "Contacts",
 };
 
 export default function Page() {
-    return (
-        <div>
-            <Text fontSize='4xl' textAlign='center'>
-                Contacts Page
-            </Text>
-            <Breadcrumbs
-                breadcrumbs={[
-                    { label: 'Contacts', href: '/contacts/' },
-                    {
-                        label: 'Create Invoice',
-                        href: '/dashboard/invoices/create',
-                        active: true,
-                    },
-                ]}
-            />
-            <Contacts />
-        </div>
-    )
+  return (
+    <div>
+      <Container>
+        <Box
+          display={"flex"}
+          justifyContent="space-between"
+          alignItems={"center"}
+          my={4}
+          px={4}
+        >
+          <Text fontSize="4xl" textAlign="center">
+            Contacts
+          </Text>
+          <CreateContact />
+        </Box>
+
+        <Contacts />
+      </Container>
+    </div>
+  );
 }
