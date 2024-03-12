@@ -1,12 +1,21 @@
-import { Jumbotron } from "@/components/Jumbotron";
-import Link from "next/link";
-import { Container } from "react-bootstrap";
+'use client'
+
+import { Link } from '@chakra-ui/next-js'
 
 export default function Home() {
   return (
-    <Container>
-      <Jumbotron />
-      <Link href="/about">About</Link>
-    </Container>
+    <>
+      <div>
+        <Link href='/about' color='blue.400' _hover={{ color: 'blue.500' }}>
+          About
+        </Link>
+      </div>
+      <div>
+        <Link href='/contacts' color='blue.400' _hover={{ color: 'blue.500' }}>
+          Contacts
+        </Link>
+      </div>
+    </>
+
   );
 }
