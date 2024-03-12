@@ -1,5 +1,7 @@
+
 import { Box, Button, Card, CardBody, CardFooter, Container, Heading, Text } from "@chakra-ui/react";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaLocationDot, FaPhone } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 
 export default function Contacts() {
     return (
@@ -13,9 +15,18 @@ export default function Contacts() {
                     <Box bg='gray' w='20%' m={2} color='white'></Box>
                     <CardBody p={3}>
                         <Heading size='md'>Full Name</Heading>
-                        <Text><FaLocationDot /> Adress</Text>
-                        <Text>Phone</Text>
-                        <Text>Email</Text>
+                        <Box display="flex" alignItems='center' color='gray'>
+                            <FaLocationDot />
+                            <Text ps={2}>Adress</Text>
+                        </Box>
+                        <Box display="flex" alignItems='center' color='gray'>
+                            <FaPhone />
+                            <Text ps={2}>Phone</Text>
+                        </Box>
+                        <Box display="flex" alignItems='center' color='gray'>
+                            <MdEmail />
+                            <Text ps={2}>Email</Text>
+                        </Box>
                     </CardBody>
 
                     <CardFooter>
