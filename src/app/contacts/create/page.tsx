@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/app/ui/breadcrumbs";
+import Form from "@/app/ui/contacts/create-form";
 import { Container } from "@chakra-ui/react";
 import { Metadata } from "next";
 
@@ -19,6 +20,7 @@ export default function Page() {
           },
         ]}
       />
+      <Form />
     </Container>
   );
 }
