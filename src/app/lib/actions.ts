@@ -25,15 +25,29 @@ export async function createContact(formData: FormInputs) {
 
 export async function getAllContacts() {
   try {
-    const contactsRes = await fetch(`${url}agenda/${AGENDA_SLUG}/`);
+    const res = await fetch(`${url}agenda/${AGENDA_SLUG}/`);
 
-    if (!contactsRes.ok) {
+    if (!res.ok) {
       throw new Error("Could not fetch contacts");
     }
 
-    return await contactsRes.json();
+    return await res.json();
   } catch (error: any) {
     console.log("Error getting all contacts: ", error.message);
     throw new Error("Error in getAllContacts function");
+  }
+}
+
+export async function deleteContact(id: string) {
+  try {
+    const res = await fetch(`${url}${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to delete contact");
+    }
+  } catch (error: any) {
+    throw new Error("Error deleting contact: " + error.message);
   }
 }

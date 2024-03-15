@@ -16,6 +16,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createContact } from "@/app/lib/actions";
 
 export type FormInputs = {
+  id: string;
   full_name: string;
   address: string;
   phone: number;
