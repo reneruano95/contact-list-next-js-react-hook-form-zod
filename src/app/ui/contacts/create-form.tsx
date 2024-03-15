@@ -6,10 +6,13 @@ import {
   FormControl,
   Input,
   Button,
+  Box,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { SubmitButton } from "../buttons";
+import { Link } from "@chakra-ui/next-js";
 
 type FormInputs = {
   full_name: string;
@@ -47,8 +50,10 @@ export default function Form() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl isInvalid={errors.full_name}>
-        <FormLabel htmlFor="full_name">Full name</FormLabel>
+      <FormControl isInvalid={errors.full_name} mb={3}>
+        <FormLabel htmlFor="full_name" mb={1}>
+          Full name
+        </FormLabel>
         <Input
           id="full_name"
           placeholder="Full Name"
@@ -59,8 +64,10 @@ export default function Form() {
         </FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={errors.address}>
-        <FormLabel htmlFor="address">Address</FormLabel>
+      <FormControl isInvalid={errors.address} mb={3}>
+        <FormLabel htmlFor="address" mb={1}>
+          Address
+        </FormLabel>
         <Input
           id="address"
           placeholder="1234 Main St"
@@ -71,8 +78,10 @@ export default function Form() {
         </FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={errors.phone}>
-        <FormLabel htmlFor="phone">Phone</FormLabel>
+      <FormControl isInvalid={errors.phone} mb={3}>
+        <FormLabel htmlFor="phone" mb={1}>
+          Phone
+        </FormLabel>
         <Input
           id="phone"
           placeholder="Your phone number"
@@ -84,14 +93,23 @@ export default function Form() {
       </FormControl>
 
       <FormControl isInvalid={errors.email}>
-        <FormLabel htmlFor="email">Email</FormLabel>
+        <FormLabel htmlFor="email" mb={1}>
+          Email
+        </FormLabel>
         <Input id="email" placeholder="Your email" {...register("email")} />
         <FormErrorMessage>
           {errors.email && errors.email.message}
         </FormErrorMessage>
       </FormControl>
 
-      <input type="submit" />
+      <Box mt={3} textAlign="right">
+        <Link href="/contacts">
+          <Button type="submit">Cancel</Button>
+        </Link>
+        <Button colorScheme="teal" type="submit" ms={6}>
+          Create Contact
+        </Button>
+      </Box>
     </form>
   );
 }
