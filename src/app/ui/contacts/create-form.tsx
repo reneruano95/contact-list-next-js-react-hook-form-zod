@@ -11,10 +11,11 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { SubmitButton } from "../buttons";
 import { Link } from "@chakra-ui/next-js";
+import { useMutation } from "@tanstack/react-query";
+import { createContact } from "@/app/lib/actions";
 
-type FormInputs = {
+export type FormInputs = {
   full_name: string;
   address: string;
   phone: number;
@@ -44,8 +45,13 @@ export default function Form() {
     resolver: zodResolver(FormSchema),
   });
 
+  const create = useMutation({
+    mutationFn: createContact,
+  });
+
   const onSubmit = (data: FormInputs) => {
     console.log(data);
+    create.mutate(data);
   };
 
   return (
