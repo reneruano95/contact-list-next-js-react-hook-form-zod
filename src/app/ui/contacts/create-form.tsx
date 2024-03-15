@@ -40,7 +40,8 @@ export default function Form() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitSuccessful },
   } = useForm<FormInputs>({
     resolver: zodResolver(FormSchema),
   });
@@ -50,8 +51,12 @@ export default function Form() {
   });
 
   const onSubmit = (data: FormInputs) => {
-    console.log(data);
-    create.mutate(data);
+    create.mutate(data, {
+      onSuccess: () => {
+        console.log("success ");
+        reset();
+      },
+    });
   };
 
   return (
