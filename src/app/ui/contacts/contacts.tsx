@@ -55,7 +55,7 @@ export default function Contacts() {
             pe={4}
           >
             <EditContact />
-            <DeleteContact id={contact.id} />
+            <DeleteContact id={contact.id} contact="contacts" />
           </CardFooter>
         </Card>
       ))}

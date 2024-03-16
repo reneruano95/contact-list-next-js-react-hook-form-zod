@@ -7,8 +7,8 @@ import {
   RiFileEditFill,
   RiFileAddFill,
 } from "react-icons/ri";
-import { deleteContact } from "../lib/actions";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteContact, getAllContacts } from "../lib/actions";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function CreateContact() {
   return (
@@ -35,17 +35,30 @@ export function EditContact() {
   );
 }
 
-export function DeleteContact({ id }: { id: string }) {
-  const queryClient = useQueryClient();
+export function DeleteContact({
+  id,
+  contact,
+}: {
+  id: string;
+  contact: string;
+}) {
+  const { refetch } = useQuery({
+    queryKey: [contact],
+    queryFn: () => getAllContacts(),
+  });
 
   const mutation = useMutation({
     mutationFn: deleteContact,
+    onSuccess: () => {
+      refetch();
+    },
+    onError: (error) => {
+      console.error(error);
+    },
   });
 
-  const handleDelete = () => {
-    mutation.mutate(id, {
-      onSuccess: () => queryClient.getQueryData([id]),
-    });
+  const handleDelete = async () => {
+    mutation.mutateAsync(id);
   };
 
   return (
