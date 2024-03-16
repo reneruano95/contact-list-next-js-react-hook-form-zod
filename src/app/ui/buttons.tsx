@@ -1,7 +1,7 @@
 "use client";
-import { Link } from "@chakra-ui/next-js";
-import { Button } from "@chakra-ui/react";
 
+import { Link } from "@chakra-ui/next-js";
+import { Button, useToast } from "@chakra-ui/react";
 import {
   RiDeleteBin5Fill,
   RiFileEditFill,
@@ -42,6 +42,8 @@ export function DeleteContact({
   id: string;
   contact: string;
 }) {
+  const toast = useToast();
+
   const { refetch } = useQuery({
     queryKey: [contact],
     queryFn: () => getAllContacts(),
@@ -51,9 +53,23 @@ export function DeleteContact({
     mutationFn: deleteContact,
     onSuccess: () => {
       refetch();
+      toast({
+        title: "Success",
+        description: "Contact deleted",
+        status: "success",
+        isClosable: true,
+        duration: 5000,
+      });
     },
     onError: (error) => {
       console.error(error);
+      toast({
+        title: "Error",
+        description: "Failed to delete contact",
+        status: "error",
+        isClosable: true,
+        duration: 5000,
+      });
     },
   });
 
