@@ -7,6 +7,7 @@ import {
   Input,
   Button,
   Box,
+  useToast,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -14,6 +15,7 @@ import { z } from "zod";
 import { Link } from "@chakra-ui/next-js";
 import { useMutation } from "@tanstack/react-query";
 import { createContact } from "@/app/lib/actions";
+import { useRouter } from "next/navigation";
 
 export type FormInputs = {
   id: string;
@@ -41,6 +43,9 @@ const FormSchema = z.object({
 });
 
 export default function Form() {
+  const toast = useToast();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -59,6 +64,15 @@ export default function Form() {
       onSuccess: () => {
         console.log("success ");
         reset();
+        toast({
+          position: "bottom-right",
+          title: "Success",
+          description: "Contact created",
+          status: "success",
+          isClosable: true,
+          duration: 3000,
+        });
+        router.push("/contacts");
       },
     });
   };

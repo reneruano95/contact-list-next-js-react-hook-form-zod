@@ -65,6 +65,7 @@ export function DeleteContact({
     onError: (error) => {
       console.error(error);
       toast({
+        position: "bottom-right",
         title: "Error",
         description: "Failed to delete contact",
         status: "error",
