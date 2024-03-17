@@ -61,7 +61,7 @@ export default function EditForm({
   const onSubmit = (data: FormInputs | any) => {
     update.mutate(data, {
       onSuccess: () => {
-        console.log("success ");
+        console.log("success");
 
         reset();
         toast({
