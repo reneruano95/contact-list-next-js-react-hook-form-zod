@@ -25,9 +25,9 @@ export function CreateContact() {
   );
 }
 
-export function EditContact() {
+export function EditContact({ id }: { id: string }) {
   return (
-    <Link href="/contacts/edit">
+    <Link href={`/contacts/edit/${id}`}>
       <Button variant="solid" colorScheme="gray" size={"sm"}>
         <RiFileEditFill />
       </Button>

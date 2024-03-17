@@ -17,10 +17,18 @@ import { FormInputs } from "./create-form";
 import { Key } from "react";
 
 export default function Contacts() {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["contacts"],
     queryFn: getAllContacts,
   });
+
+  if (isLoading) {
+    return (
+      <Text fontSize="lg" textAlign={"center"}>
+        Loading...
+      </Text>
+    );
+  }
 
   return (
     <div>
@@ -59,7 +67,7 @@ export default function Contacts() {
             justifyContent="space-around"
             pe={4}
           >
-            <EditContact />
+            <EditContact id={contact.id} />
             <DeleteContact id={contact.id} contact="contacts" />
           </CardFooter>
         </Card>

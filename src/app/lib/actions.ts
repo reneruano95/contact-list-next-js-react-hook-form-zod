@@ -22,6 +22,25 @@ export async function createContact(formData: FormInputs) {
     throw new Error("Error in createContact function: " + error.message);
   }
 }
+export async function updateContact(id: string, formData: FormInputs) {
+  try {
+    const res = await fetch(`${url}${id}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...formData, agenda_slug: AGENDA_SLUG }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to update contact");
+    }
+
+    return await res.json();
+  } catch (error: any) {
+    throw new Error("Error in updateContact function: " + error.message);
+  }
+}
 
 export async function getAllContacts() {
   try {
@@ -36,6 +55,12 @@ export async function getAllContacts() {
     console.log("Error getting all contacts: ", error.message);
     throw new Error("Error in getAllContacts function");
   }
+}
+
+export async function getContactById(id: string) {
+  const res = await fetch(`${url}${id}`);
+  const data = await res.json();
+  return data;
 }
 
 export async function deleteContact(id: string) {

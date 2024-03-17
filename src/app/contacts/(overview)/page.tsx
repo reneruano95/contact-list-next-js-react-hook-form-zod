@@ -1,11 +1,6 @@
-import { Metadata } from "next";
 import Contacts from "@/app/ui/contacts/contacts";
-import { Box, Container, Text } from "@chakra-ui/react";
-import { CreateContact } from "../ui/buttons";
-
-export const metadata: Metadata = {
-  title: "Contacts",
-};
+import { Box, Container, Skeleton, Text } from "@chakra-ui/react";
+import { CreateContact } from "../../ui/buttons";
 
 export default function Page() {
   return (
@@ -23,7 +18,6 @@ export default function Page() {
           </Text>
           <CreateContact />
         </Box>
-
         <Contacts />
       </Container>
     </div>

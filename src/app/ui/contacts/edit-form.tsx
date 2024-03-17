@@ -14,16 +14,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Link } from "@chakra-ui/next-js";
 import { useMutation } from "@tanstack/react-query";
-import { createContact } from "@/app/lib/actions";
+import { updateContact } from "@/app/lib/actions";
 import { useRouter } from "next/navigation";
-
-export type FormInputs = {
-  id: string;
-  full_name: string;
-  address: string;
-  phone: number;
-  email: string;
-};
+import { FormInputs } from "./create-form";
 
 const FormSchema = z.object({
   full_name: z
@@ -42,7 +35,13 @@ const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
 });
 
-export default function Form() {
+export default function EditForm({
+  id,
+  contacts,
+}: {
+  id: string;
+  contacts: FormInputs;
+}) {
   const toast = useToast();
   const router = useRouter();
 
@@ -55,19 +54,20 @@ export default function Form() {
     resolver: zodResolver(FormSchema),
   });
 
-  const create = useMutation({
-    mutationFn: createContact,
+  const update = useMutation({
+    mutationFn: (prev: FormInputs) => updateContact(id, prev),
   });
 
-  const onSubmit = (data: FormInputs) => {
-    create.mutate(data, {
+  const onSubmit = (data: FormInputs | any) => {
+    update.mutate(data, {
       onSuccess: () => {
         console.log("success ");
+
         reset();
         toast({
           position: "bottom-right",
           title: "Success",
-          description: "Contact created",
+          description: "Contact updated",
           status: "success",
           isClosable: true,
           duration: 3000,
@@ -86,6 +86,7 @@ export default function Form() {
         <Input
           id="full_name"
           placeholder="Full Name"
+          defaultValue={contacts?.full_name}
           {...register("full_name")}
         />
         <FormErrorMessage>
@@ -100,6 +101,7 @@ export default function Form() {
         <Input
           id="address"
           placeholder="1234 Main St"
+          defaultValue={contacts?.address}
           {...register("address")}
         />
         <FormErrorMessage>
@@ -114,6 +116,9 @@ export default function Form() {
         <Input
           id="phone"
           placeholder="Your phone number"
+          type="tel"
+          //   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          defaultValue={contacts?.phone}
           {...register("phone")}
         />
         <FormErrorMessage>
@@ -125,7 +130,13 @@ export default function Form() {
         <FormLabel htmlFor="email" mb={1}>
           Email
         </FormLabel>
-        <Input id="email" placeholder="Your email" {...register("email")} />
+        <Input
+          id="email"
+          placeholder="Your email"
+          type="email"
+          defaultValue={contacts?.email}
+          {...register("email")}
+        />
         <FormErrorMessage>
           {errors.email && errors.email.message}
         </FormErrorMessage>
@@ -136,7 +147,7 @@ export default function Form() {
           <Button type="submit">Cancel</Button>
         </Link>
         <Button colorScheme="teal" type="submit" ms={6}>
-          Create Contact
+          Update Contact
         </Button>
       </Box>
     </form>
