@@ -33,7 +33,10 @@ const FormSchema = z.object({
       invalid_type_error: "Phone must be a number",
     })
     .int()
-    .positive(),
+    .positive()
+    .refine((value) => value.toString().length >= 10, {
+      message: "Phone number must be at most 10 digits long",
+    }),
   email: z.string().email({ message: "Invalid email address" }),
 });
 

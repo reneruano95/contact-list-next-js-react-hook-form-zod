@@ -24,6 +24,11 @@ export default function Contacts() {
 
   return (
     <div>
+      {data?.length === 0 && (
+        <Text fontSize="lg" textAlign={"center"}>
+          No contacts yet. Please add one.
+        </Text>
+      )}
       {data?.map((contact: FormInputs, index: Key | null | undefined) => (
         <Card
           direction="row"

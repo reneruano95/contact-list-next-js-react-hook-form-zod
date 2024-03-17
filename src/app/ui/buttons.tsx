@@ -54,6 +54,7 @@ export function DeleteContact({
     onSuccess: () => {
       refetch();
       toast({
+        position: "bottom-right",
         title: "Success",
         description: "Contact deleted",
         status: "success",
