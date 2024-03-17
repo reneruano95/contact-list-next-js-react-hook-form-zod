@@ -79,6 +79,8 @@ export default function Form() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore */}
       <FormControl isInvalid={errors.full_name} mb={3}>
         <FormLabel htmlFor="full_name" mb={1}>
           Full name
@@ -93,6 +95,8 @@ export default function Form() {
         </FormErrorMessage>
       </FormControl>
 
+      {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore */}
       <FormControl isInvalid={errors.address} mb={3}>
         <FormLabel htmlFor="address" mb={1}>
           Address
@@ -107,6 +111,8 @@ export default function Form() {
         </FormErrorMessage>
       </FormControl>
 
+      {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore */}
       <FormControl isInvalid={errors.phone} mb={3}>
         <FormLabel htmlFor="phone" mb={1}>
           Phone
@@ -121,6 +127,8 @@ export default function Form() {
         </FormErrorMessage>
       </FormControl>
 
+      {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore */}
       <FormControl isInvalid={errors.email}>
         <FormLabel htmlFor="email" mb={1}>
           Email
