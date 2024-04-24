@@ -16,16 +16,23 @@ import { createAgenda, getAgenda, getAllContacts } from "@/lib/actions";
 
 import { FormInputs } from "./create-form";
 import { Key, useEffect } from "react";
+import { useAgendaStore } from "@/lib/store/agendaStore";
 
 interface Contacts extends FormInputs {
   id: string
 }
 
 export default function Contacts() {
+  const agenda = useAgendaStore((state) => state.agenda)
+
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["contacts"],
     queryFn: getAllContacts,
   });
+
+  useEffect(() => {
+    console.log(agenda)
+  }, [])
 
   if (isLoading) {
     return (
@@ -42,6 +49,7 @@ export default function Contacts() {
       </Text>
     )
   }
+
 
   return (
     <div>
