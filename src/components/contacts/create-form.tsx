@@ -14,12 +14,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Link } from "@chakra-ui/next-js";
 import { useMutation } from "@tanstack/react-query";
-import { updateContact } from "@/app/lib/actions";
+import { createContact } from "@/lib/actions";
 import { useRouter } from "next/navigation";
-import { FormInputs } from "./create-form";
+
+export type FormInputs = {
+  name: string;
+  address: string;
+  phone: number;
+  email: string;
+};
 
 const FormSchema = z.object({
-  full_name: z
+  name: z
     .string()
     .min(5, { message: "Must be 5 or more characters long" }),
   address: z.string().min(5, { message: "Must be 5 or more characters long" }),
@@ -35,13 +41,7 @@ const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
 });
 
-export default function EditForm({
-  id,
-  contacts,
-}: {
-  id: string;
-  contacts: FormInputs;
-}) {
+export default function Form() {
   const toast = useToast();
   const router = useRouter();
 
@@ -54,20 +54,19 @@ export default function EditForm({
     resolver: zodResolver(FormSchema),
   });
 
-  const update = useMutation({
-    mutationFn: (prev: FormInputs) => updateContact(id, prev),
+  const create = useMutation({
+    mutationFn: createContact,
   });
 
-  const onSubmit = (data: FormInputs | any) => {
-    update.mutate(data, {
+  const onSubmit = (data: FormInputs) => {
+    create.mutate(data, {
       onSuccess: () => {
-        console.log("success");
-
+        console.log("success ");
         reset();
         toast({
           position: "bottom-right",
           title: "Success",
-          description: "Contact updated",
+          description: "Contact created",
           status: "success",
           isClosable: true,
           duration: 3000,
@@ -79,33 +78,27 @@ export default function EditForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore */}
-      <FormControl isInvalid={errors.full_name} mb={3}>
+      <FormControl isInvalid={errors.name ? true : false} mb={3}>
         <FormLabel htmlFor="full_name" mb={1}>
           Full name
         </FormLabel>
         <Input
           id="full_name"
           placeholder="Full Name"
-          defaultValue={contacts?.full_name}
-          {...register("full_name")}
+          {...register("name")}
         />
         <FormErrorMessage>
-          {errors.full_name && errors.full_name.message}
+          {errors.name && errors.name.message}
         </FormErrorMessage>
       </FormControl>
 
-      {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore */}
-      <FormControl isInvalid={errors.address} mb={3}>
+      <FormControl isInvalid={errors.address ? true : false} mb={3}>
         <FormLabel htmlFor="address" mb={1}>
           Address
         </FormLabel>
         <Input
           id="address"
           placeholder="1234 Main St"
-          defaultValue={contacts?.address}
           {...register("address")}
         />
         <FormErrorMessage>
@@ -113,18 +106,13 @@ export default function EditForm({
         </FormErrorMessage>
       </FormControl>
 
-      {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore */}
-      <FormControl isInvalid={errors.phone} mb={3}>
+      <FormControl isInvalid={errors.phone ? true : false} mb={3}>
         <FormLabel htmlFor="phone" mb={1}>
           Phone
         </FormLabel>
         <Input
           id="phone"
           placeholder="Your phone number"
-          type="tel"
-          //   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-          defaultValue={contacts?.phone}
           {...register("phone")}
         />
         <FormErrorMessage>
@@ -132,19 +120,11 @@ export default function EditForm({
         </FormErrorMessage>
       </FormControl>
 
-      {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore */}
-      <FormControl isInvalid={errors.email}>
+      <FormControl isInvalid={errors.email ? true : false}>
         <FormLabel htmlFor="email" mb={1}>
           Email
         </FormLabel>
-        <Input
-          id="email"
-          placeholder="Your email"
-          type="email"
-          defaultValue={contacts?.email}
-          {...register("email")}
-        />
+        <Input id="email" placeholder="Your email" {...register("email")} />
         <FormErrorMessage>
           {errors.email && errors.email.message}
         </FormErrorMessage>
@@ -155,7 +135,7 @@ export default function EditForm({
           <Button type="submit">Cancel</Button>
         </Link>
         <Button colorScheme="teal" type="submit" ms={6}>
-          Update Contact
+          Create Contact
         </Button>
       </Box>
     </form>

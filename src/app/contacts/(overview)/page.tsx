@@ -1,8 +1,14 @@
-import Contacts from "@/app/ui/contacts/contacts";
+'use client'
+
+import Contacts from "@/components/contacts/contacts";
 import { Box, Container, Skeleton, Text } from "@chakra-ui/react";
-import { CreateContact } from "../../ui/buttons";
+import { CreateContact } from "../../../components/buttons";
+import { useEffect } from "react";
+import { createAgenda, getAgenda } from "@/lib/actions";
 
 export default function Page() {
+
+
   return (
     <div>
       <Container>

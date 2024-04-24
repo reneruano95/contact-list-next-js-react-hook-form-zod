@@ -1,8 +1,8 @@
 "use client";
 
-import { getContactById } from "@/app/lib/actions";
-import Breadcrumbs from "@/app/ui/breadcrumbs";
-import EditForm from "@/app/ui/contacts/edit-form";
+import { getContactById } from "@/lib/actions";
+import Breadcrumbs from "@/components/breadcrumbs";
+import EditForm from "@/components/contacts/edit-form";
 import { Box, Container } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 

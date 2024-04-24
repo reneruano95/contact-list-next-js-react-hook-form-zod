@@ -1,5 +1,6 @@
-import Breadcrumbs from "@/app/ui/breadcrumbs";
-import Form from "@/app/ui/contacts/create-form";
+import Breadcrumbs from "@/components/breadcrumbs";
+import Form from "@/components/contacts/create-form";
+import CreateAgendaForm from "@/components/create-agenda-form";
 import { Box, Container } from "@chakra-ui/react";
 import { Metadata } from "next";
 
@@ -22,6 +23,7 @@ export default function Page() {
           ]}
         />
       </Box>
+      {/* <CreateAgendaForm /> */}
       <Form />
     </Container>
   );

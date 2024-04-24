@@ -10,14 +10,19 @@ import {
 } from "@chakra-ui/react";
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-import { DeleteContact, EditContact } from "@/app/ui/buttons";
+import { DeleteContact, EditContact } from "@/components/buttons";
 import { useQuery } from "@tanstack/react-query";
-import { getAllContacts } from "@/app/lib/actions";
+import { createAgenda, getAgenda, getAllContacts } from "@/lib/actions";
+
 import { FormInputs } from "./create-form";
-import { Key } from "react";
+import { Key, useEffect } from "react";
+
+interface Contacts extends FormInputs {
+  id: string
+}
 
 export default function Contacts() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ["contacts"],
     queryFn: getAllContacts,
   });
@@ -30,14 +35,22 @@ export default function Contacts() {
     );
   }
 
+  if (isError) {
+    return (
+      <Text fontSize="lg" textAlign={"center"}>
+        {error.message}
+      </Text>
+    )
+  }
+
   return (
     <div>
-      {data?.length === 0 && (
+      {data.contacts?.length === 0 && (
         <Text fontSize="lg" textAlign={"center"}>
           No contacts yet. Please add one.
         </Text>
       )}
-      {data?.map((contact: FormInputs, index: Key | null | undefined) => (
+      {data.contacts?.map((contact: Contacts, index: Key | null | undefined) => (
         <Card
           direction="row"
           overflow="hiddens"
@@ -47,7 +60,7 @@ export default function Contacts() {
         >
           <Box bg="gray" w="20%" m={2} color="white"></Box>
           <CardBody p={3}>
-            <Heading size="md">{contact.full_name}</Heading>
+            <Heading size="md">{contact.name}</Heading>
             <Box display="flex" alignItems="center" color="gray">
               <FaLocationDot />
               <Text ps={2}>{contact.address}</Text>
